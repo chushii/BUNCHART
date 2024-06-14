@@ -1,0 +1,96 @@
+{% extends "main/layout.html" %}
+
+{% block content %}
+
+<h2>{{ title }}</h2> <hr />
+
+{% if form != None %}
+<div class="container">
+	<form class="row" method="post">
+		{% csrf_token %}
+		<div class="col-6 m-1">
+			<label for="{{ form.name.name.id_for_label }}">{{ form.name.label }}:</label>
+		</div>
+		<div class="col-6 m-1">
+			<input type="text" class="form-control" id="input_name" name="name">
+		</div>
+		<div class="col-6 m-1">
+			<label for="{{ form.gender.name.id_for_label }}">{{ form.gender.label }}:</label>
+		</div>
+		<div class="col-6 m-1">
+			<div class="form-check form-check-inline">
+				<input class="form-check-input" type="radio" id="input_gender_m" name="gender" value="1">
+				<label class="form-check-label">Мужской</label>
+			</div>
+			<div class="form-check form-check-inline">
+				<input class="form-check-input" type="radio" id="input_gender_f" name="gender" value="2">
+				<label class="form-check-label">Женский</label>
+			</div>
+		</div>
+		<div class="col-6 m-1">
+			<label for="{{ form.grade.name.id_for_label }}">{{ form.grade.label }}:</label>
+		</div>
+		<div class="col-6 m-1">
+			<select class="form-select" id="input_grade" name="grade">
+				<option value="1">Ужасно</option>
+				<option value="2">Плохо</option>
+				<option selected value="3">Нормально</option>
+				<option value="4">Хорошо</option>
+				<option value="5">Отлично</option>
+			</select>
+		</div>
+		<div class="col-6 m-1">
+			<div class="form-check">
+				<label class="form-check-label" for="{{ form.recom.name.id_for_label }}">
+					{{ form.recom.label }}
+				</label>
+				<input class="form-check-input" type="checkbox" value="" id="input_grade" name="grade">
+			</div>
+		</div>
+		<div class="col-6 m-1">
+			<label for="{{ form.advice.name.id_for_label }}">{{ form.advice.label }}:</label>
+		</div>
+		<div class="col-6 m-1">
+			<textarea class="form-control" id="input_advice" name="advice" rows="3"></textarea>
+		</div>
+		<div class="col-6 m-1">
+			<input type="submit" id="sb" value="Отправить" class="btn btn-primary col-12 mt-3">
+		</div>
+	</form>
+</div>
+{% else %}
+<div class="results">
+	<ul>
+		<li><span>Имя: </span>{{ data.name }}</li>
+		<li><span>Пол: </span>{{ data.gender }}</li>
+		<li><span>Ваша оценка: </span>{{ data.grade }}</li>
+		<li><span>Рекомендуете этот сайт: </span>{{ data.recom }}</li>
+		<li><span>Комментарий: </span>{{ data.advice }}</li>
+	</ul>
+</div>
+{% endif %}
+
+<script>
+	$('#sb').mouseover(function () {
+        $(this).css('background', 'white');
+		$(this).css('color', 'blue');
+    });
+	$('#sb').mouseout(function () {
+        $(this).css('background', 'blue');
+		$(this).css('color', 'white');
+    });
+	$('#input_name').focus(function () {
+        $(this).css('background', 'aliceblue');
+    });
+	$('#input_name').blur(function () {
+        $(this).css('background', '');
+    });
+	$('#input_advice').focus(function () {
+        $(this).css('background', 'aliceblue');
+    });
+	$('#input_advice').blur(function () {
+        $(this).css('background', '');
+    });
+</script>
+
+{% endblock %}

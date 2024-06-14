@@ -1,0 +1,95 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ title }} - БанчАРТ</title>
+    <link rel="icon" href="{% static 'main/favicon.ico' %}" />
+    <link rel="stylesheet" href="{% static 'main/css/style.css' %}" />
+	<link rel="stylesheet" href="{% static 'main/css/bootstrap.min.css' %}" />
+	<link rel="stylesheet" href="http://use.fontawesome.com/releases/v5.8.2/css/all.css" />
+    <script src="{% static 'main/scripts/modernizr-2.6.2.js' %}"></script>
+	<script src="{% static 'main/scripts/jquery-1.10.2.js' %}"></script>
+</head>
+
+<body>
+	
+	<nav class="navbar navbar-expand-lg bg-dark">
+		<div class="container">
+			<a class="navbar-brand" href="{% url 'home' %}">
+				<img src="{% static 'main/bnuuy.png' %}" alt="brand">
+			</a>
+			<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+				<i class="fa-solid fa-bars text-white"></i>
+			</button>
+			<div class="collapse navbar-collapse" id="navbarSupportedContent">
+				<ul class="navbar-nav me-auto mb-2 mb-lg-0">
+					<li class="nav-item">
+						<a class="nav-link text-white" href="{% url 'home' %}">Главная</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link text-white" href="{% url 'news' %}">Новости</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link text-white" href="{% url 'arts' %}">Арты</a>
+					</li>
+				</ul>
+				<ul class="navbar-nav navbar-right">
+					{% if user.is_authenticated %}
+					<li class="nav-item">
+						<a class="nav-link text-white">{{ user.username }}</a>
+					</li>
+					<form id="logoutForm" action="/logout/" method="post" class="navbar-right">
+						{% csrf_token %}
+						<li class="nav-item"><a class="nav-link text-white" href="javascript:document.getElementById('logoutForm').submit()">
+							<i class="fas fa-sign-out-alt"></i></a>
+						</li>
+					</form>
+					{% else %}
+					<li class="nav-item">
+						<a class="nav-link text-white" href="{% url 'login' %}"><i class="fas fa-sign-in-alt"></i></a>
+					</li>
+					{% endif %}
+				</ul>
+			</div>
+		</div>
+	</nav>
+
+    <div class="container body-content">
+        {% block content %}
+        {% endblock %}
+        <hr/>
+		<div class="row"> 
+            <div class="col-md-6"> 
+                <p>
+					&copy; {{ year }} - БанчАРТ (v0.3) 
+					{% if user.is_superuser %} - Суперпользователь {% endif %}
+				</p> 
+            </div> 
+            <div class="col-md-6 text-end"> 
+                <ul class="list-inline footer-links"> 
+                    <li class="list-inline-item"> 
+                        <a href="{% url 'about' %}">О проекте</a> 
+                    </li> 
+                    <li class="list-inline-item"> 
+                        <a href="{% url 'contact' %}">Контакты</a> 
+                    </li> 
+                    <li class="list-inline-item"> 
+                        <a href="{% url 'links' %}">Ссылки</a> 
+                    </li>
+					<li class="list-inline-item"> 
+                        <a href="{% url 'pool' %}">Обратная связь</a> 
+                    </li> 
+                </ul> 
+            </div> 
+        </div> 
+    </div>
+	
+    <script src="{% static 'main/scripts/respond.js' %}"></script>
+	<script src="{% static 'main/scripts/bootstrap.bundle.min.js' %}"></script>
+    {% block scripts %}
+    {% endblock %}
+</body>
+</html>
