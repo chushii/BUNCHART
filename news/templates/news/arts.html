@@ -1,0 +1,36 @@
+{% extends "main/layout.html" %}
+
+{% block content %}
+
+<h2>
+	{{ title }}
+	{% if user.is_authenticated %}
+	<a href="{% url 'newart' %}"><i class="fas fa-plus"></i></a>
+	{% endif %}
+	{% if user.is_superuser %}
+	<a href="/admin/news/pictures/add"><i class="fas fa-unlock"></i></a>
+	{% endif %}
+</h2> <hr />
+
+<div class="container-fluid">
+	{% if artslist %}
+	<div class="row row-cols-1 row-cols-md-6 g-4">
+		{% for art in artslist %}
+		<div class="col">
+			<div class="card mx-auto text-center">
+				<a href="{% url 'art' n=art.id %}">
+					<img src={{ art.image.url }} class="card-img-top" alt="...">
+				</a>
+				<div class="card-body">
+					<h5 class="card-title">{{ art.title }}</h5>
+				</div>
+			</div>
+		</div>
+		{% endfor %}
+	</div>
+	{% else %}
+	<p>Здесь ничего нет...</p>
+	{% endif %}
+</div>
+
+{% endblock %}
